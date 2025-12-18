@@ -1,0 +1,7 @@
+flwr==1.5.0
+mlflow
+scikit-learn
+fastapi
+uvicorn
+pandas
+matplotlib

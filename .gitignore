@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.py[cod]
+
+data/*.csv
+
+mlflow.db
+mlruns/
+
+.vscode/
