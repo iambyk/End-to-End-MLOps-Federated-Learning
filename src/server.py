@@ -2,7 +2,6 @@ import flwr as fl
 import mlflow
 import os
 
-# 1. Adreslemeyi Tam Yol (Absolute Path) Yapalım
 current_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(os.path.dirname(current_dir), "mlflow.db")
 mlflow.set_tracking_uri(f"sqlite:///{db_path}")
@@ -12,14 +11,12 @@ class MLflowStrategy(fl.server.strategy.FedAvg):
     def aggregate_evaluate(self, server_round, results, failures):
         loss, metrics = super().aggregate_evaluate(server_round, results, failures)
         
-        # Terminale bilgi yazdıralım ki kodun buraya girdiğinden emin olalım
         print(f"\n>>> Tur {server_round} değerlendiriliyor...")
         
         if metrics and "accuracy" in metrics:
             acc = metrics["accuracy"]
             print(f">>> Başarı Oranı: {acc} - MLflow'a yazılıyor...")
             
-            # Yazma işlemini burada yapıyoruz
             try:
                 with mlflow.start_run(run_name=f"Round_{server_round}"):
                     mlflow.log_metric("accuracy", acc, step=server_round)
